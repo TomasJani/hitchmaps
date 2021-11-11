@@ -128,5 +128,8 @@ dmypy.json
 # Pyre type checker
 .pyre/
 .mypy_cache
+
+# My ignnores
 .coverage
 htmlcov
+.idea/
