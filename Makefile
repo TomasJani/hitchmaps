@@ -2,6 +2,9 @@
 
 .PHONY: prestart start-worker
 
+migrate:
+	alembic revision --autogenerate
+
 prestart:
 	# Let the DB start
 	python app/tests_pre_start.py
