@@ -71,7 +71,7 @@ services:
   db:
     image: postgres:12
     volumes:
-      - app-db-data:/var/lib/postgresql/data/pgdata
+      - hitchmaps-db-data:/var/lib/postgresql/data/pgdata
     env_file:
       - .env
     environment:
@@ -79,7 +79,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.labels.${STACK_NAME?Variable not set}.app-db-data == true
+          - node.labels.${STACK_NAME?Variable not set}.hitchmaps-db-data == true
 
   pgadmin:
     image: dpage/pgadmin4

@@ -7,17 +7,17 @@ migrate:
 
 prestart:
 	# Let the DB start
-	python app/tests_pre_start.py
+	python hitchmaps/tests_pre_start.py
 	# Run migrations
 	alembic upgrade head
 	# Create initial data in DB
-	python app/initial_data.py
+	python hitchmaps/initial_data.py
 
 start-worker:
 	# Test connection to DB
-	python app/tests_pre_start.py
+	python hitchmaps/tests_pre_start.py
 	# Start Celery server
-	celery -A app.worker worker -l INFO -Q main-queue -c 1
+	celery -A hitchmaps.worker worker -l INFO -Q main-queue -c 1
 
 # Testing
 
@@ -25,14 +25,14 @@ start-worker:
 
 test:
 	# Run tests
-	pytest --cov=app --cov-report=term-missing app/tests "${@}"
+	pytest --cov=hitchmaps --cov-report=term-missing hitchmaps/tests "${@}"
 
 test-cov:
 	# Run tests with coverage
 	bash scripts/test.sh --cov-report=html "${@}"
 
 test-running:
-	python app/tests_pre_start.py
+	python hitchmaps/tests_pre_start.py
 	bash ./scripts/test.sh "$@"
 
 # Linting/Formatting
