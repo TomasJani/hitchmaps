@@ -1,9 +1,12 @@
 # Starting Services
 
-.PHONY: prestart start-worker
+.PHONY: make-migrations migrate prestart start-worker
+
+make-migrations:
+	alembic revision --autogenerate
 
 migrate:
-	alembic revision --autogenerate
+	alembic upgrade head
 
 prestart:
 	# Let the DB start

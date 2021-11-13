@@ -66,6 +66,9 @@ class Settings(BaseSettings):
             return values["PROJECT_NAME"]
         return v
 
+    CELERY_WORKER_NAME: Optional[str] = None
+    CELERY_BROKER_HOST: Optional[str] = None
+
     EMAIL_RESET_TOKEN_EXPIRE_HOURS: int = 48
     EMAIL_TEMPLATES_DIR: str = "/hitchmaps/hitchmaps/email-templates/build"
     EMAILS_ENABLED: bool = False
