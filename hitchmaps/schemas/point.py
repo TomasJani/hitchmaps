@@ -42,3 +42,8 @@ class PointInDB(PointInDBBase):
 class Coordinates(BaseModel):
     longitude: float
     latitude: float
+
+
+class CoordinatesDistance(BaseModel):
+    coordinates: Coordinates
+    distance: float

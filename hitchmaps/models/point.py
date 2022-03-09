@@ -1,14 +1,35 @@
-from sqlalchemy import Column, DateTime, Float, Index, Integer, Text, UniqueConstraint
+from typing import TYPE_CHECKING
 
+from sqlalchemy import (
+    Column,
+    Enum,
+    Float,
+    ForeignKey,
+    Index,
+    Integer,
+    Text,
+    UniqueConstraint,
+)
+from sqlalchemy.orm import relationship
+
+from hitchmaps import enums
 from hitchmaps.db.base_class import Base
+
+if TYPE_CHECKING:
+    from .review import Review  # noqa: F401
+    from .user import User  # noqa: F401
 
 
 class Point(Base):
-    id = Column(Integer, primary_key=True, index=True)
-    country = Column(Text)
-    latitude = Column(Float)
-    longitude = Column(Float)
-    created = Column(DateTime, index=True)
+    country = Column(Text, nullable=False)
+    latitude = Column(Float, nullable=False)
+    longitude = Column(Float, nullable=False)
+    description = Column(Text, default=None)
+    status = Column(Enum(enums.Status), default=enums.Status.ACTIVE)
+
+    user_id = Column(Integer, ForeignKey("user.id"))
+    user = relationship("User", back_populates="points")
+    reviews = relationship("Review", back_populates="review")
 
     __table_args__ = (UniqueConstraint("latitude", "longitude"),)
 

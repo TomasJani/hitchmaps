@@ -4,6 +4,8 @@ from starlette.responses import RedirectResponse
 
 from hitchmaps.api.api_v1.api import api_router
 from hitchmaps.core.config import settings
+from hitchmaps.exception_handlers import exception_handlers
+from hitchmaps.utils import include_exception_handlers
 
 app = FastAPI(
     title=settings.PROJECT_NAME, openapi_url=f"{settings.API_V1_STR}/openapi.json"
@@ -18,6 +20,8 @@ if settings.BACKEND_CORS_ORIGINS:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+include_exception_handlers(app, exception_handlers)
 
 
 @app.get("/", response_class=RedirectResponse)
