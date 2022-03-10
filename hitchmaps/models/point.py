@@ -29,7 +29,7 @@ class Point(Base):
 
     user_id = Column(Integer, ForeignKey("user.id"))
     user = relationship("User", back_populates="points")
-    reviews = relationship("Review", back_populates="review")
+    reviews = relationship("Review", back_populates="point")
 
     __table_args__ = (UniqueConstraint("latitude", "longitude"),)
 

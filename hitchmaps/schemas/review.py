@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -6,24 +7,24 @@ from pydantic import BaseModel
 from hitchmaps import enums
 
 
-class PointBase(BaseModel):
-    country: str
-    longitude: float
-    latitude: float
+class ReviewBase(BaseModel):
+    description: Optional[str] = None
+    rating: Optional[float] = None
+    waiting_time: Optional[int] = None
 
 
 # Properties to receive on item creation
-class PointCreate(PointBase):
+class ReviewCreate(ReviewBase):
     pass
 
 
 # Properties to receive on item update
-class PointUpdate(PointBase):
+class ReviewUpdate(ReviewBase):
     pass
 
 
 # Properties shared by models stored in DB
-class PointInDBBase(PointBase):
+class ReviewInDBBase(ReviewBase):
     id: int
     created_at: datetime
 
@@ -32,21 +33,11 @@ class PointInDBBase(PointBase):
 
 
 # Properties to return to client
-class Point(PointInDBBase):
+class Review(ReviewInDBBase):
     pass
 
 
 # Properties stored in DB
-class PointInDB(PointInDBBase):
+class ReviewInDB(ReviewInDBBase):
     modified_at: datetime
     status: enums.Status = enums.Status.ACTIVE
-
-
-class Coordinates(BaseModel):
-    longitude: float
-    latitude: float
-
-
-class CoordinatesDistance(BaseModel):
-    coordinates: Coordinates
-    distance: float

@@ -25,7 +25,7 @@ include_exception_handlers(app, exception_handlers)
 
 
 @app.get("/", response_class=RedirectResponse)
-async def redirect_to_docs():
+async def redirect_to_docs() -> str:
     return "/docs"
 
 

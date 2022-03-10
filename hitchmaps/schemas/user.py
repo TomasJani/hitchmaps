@@ -1,14 +1,15 @@
+from datetime import datetime
 from typing import Optional
 
 from pydantic import BaseModel, EmailStr
 
-
 # Shared properties
+from hitchmaps import enums
+
+
 class UserBase(BaseModel):
     email: Optional[EmailStr] = None
-    is_active: Optional[bool] = True
-    is_superuser: bool = False
-    full_name: Optional[str] = None
+    name: Optional[str] = None
 
 
 # Properties to receive via API on creation
@@ -24,6 +25,7 @@ class UserUpdate(UserBase):
 
 class UserInDBBase(UserBase):
     id: Optional[int] = None
+    created_at: datetime
 
     class Config:
         orm_mode = True
@@ -36,4 +38,7 @@ class User(UserInDBBase):
 
 # Additional properties stored in DB
 class UserInDB(UserInDBBase):
+    is_superuser: bool = False
     hashed_password: str
+    modified_at: datetime
+    status: enums.Status = enums.Status.ACTIVE

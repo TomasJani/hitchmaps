@@ -1,7 +1,7 @@
 """create_base
 
 Revision ID: f3be6d9e944d
-Revises: 
+Revises:
 Create Date: 2022-03-09 19:39:43.416282
 
 """
